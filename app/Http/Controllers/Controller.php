@@ -16,7 +16,6 @@ class Controller extends BaseController
         $count_followings = $user->followings()->count();
         $count_followers = $user->followers()->count();
          $count_favorings = $user->favorings()->count();
-        $count_favoreds = $user->favoreds()->count();
         
 
         return [
@@ -24,7 +23,6 @@ class Controller extends BaseController
             'count_followings' => $count_followings,
             'count_followers' => $count_followers,
             'count_favorings' => $count_favorings,
-            'count_favoreds' => $count_favoreds,
         ];
     
     }

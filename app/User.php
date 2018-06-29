@@ -92,7 +92,7 @@ public function feed_microposts()
     //　以下、課題２より
     
     // 2 多対多のUser用
-    public function favoring()
+    public function favorings()
     {
         return $this->belongsToMany(Micropost::class, 'favorite', 'user_id', 'micropost_id')->withTimestamps();
     }                               
@@ -132,7 +132,7 @@ public function unfavorite($micropostId)
 }
 
 public function is_favoring($micropostId) {
-    return $this->favorings()->where('micropost_id', $userId)->exists();
+    return $this->favorings()->where('micropost_id', $micropostId)->exists();
 }
 
 }
