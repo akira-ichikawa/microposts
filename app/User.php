@@ -92,7 +92,7 @@ public function feed_microposts()
     //　以下、課題２より
     
     // 2 多対多のUser用
-    public function favorings()
+    public function favorites()
     {
         return $this->belongsToMany(Micropost::class, 'favorite', 'user_id', 'micropost_id')->withTimestamps();
     }                               
@@ -100,16 +100,14 @@ public function feed_microposts()
 public function favorite($micropostId)
 {
     // 既にfavしているかの確認
-    $exist = $this->is_favoring($micropostId);
-    // 自分自身ではないかの確認
-    $its_me = $this->id == $micropostId;
+    $exist = $this->is_favorite($micropostId);
 
-    if ($exist || $its_me) {
+    if ($exist) {
         // 既にfavしていれば何もしない
         return false;
     } else {
         // 未favであればfavする
-        $this->favoring()->attach($micropostId);
+        $this->favorites()->attach($micropostId);
         return true;
     }
 }
@@ -117,13 +115,12 @@ public function favorite($micropostId)
 public function unfavorite($micropostId)
 {
     // 既にfavしているかの確認
-    $exist = $this->is_favoring($micropostId);
-    // 自分自身ではないかの確認
-    $its_me = $this->id == $micropostId;
+    $exist = $this->is_favorite($micropostId);
 
-    if ($exist && !$its_me) {
-        // 既にfavしていればフォローを外す
-        $this->followings()->detach($micropostId);
+
+    if ($exist) {
+        // 既にfavしていればfavを外す
+        $this->favorites()->detach($micropostId);
         return true;
     } else {
         // 未favであれば何もしない
@@ -131,8 +128,8 @@ public function unfavorite($micropostId)
     }
 }
 
-public function is_favoring($micropostId) {
-    return $this->favorings()->where('micropost_id', $micropostId)->exists();
+public function is_favorite($micropostId) {
+    return $this->favorites()->where('micropost_id', $micropostId)->exists();
 }
 
 }
