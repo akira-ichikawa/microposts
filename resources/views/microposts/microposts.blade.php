@@ -1,5 +1,5 @@
 <ul class="media-list">
-@foreach ($microposts as $micropost)
+@foreach ($microposts as $micropost) <!-- microposts変数をどこから持ってきて、１つ１つ -->
     <?php $user = $micropost->user; ?>
     <li class="media">
         <div class="media-left">
@@ -16,11 +16,13 @@
             <div>
             @if (Auth::User()->is_favorite($micropost->id))
                 {!! Form::open(['route' => ['user.unfavorite', $micropost->id], 'method' => 'delete']) !!}
-                {!! Form::submit('Unfavorite', ['class' => 'btn btn-danger btn-xs']) !!}
+                <!--{!! Form::submit('Unfavorite', ['class' => 'btn btn-danger btn-xs']) !!}-->
+                {!! Form::submit('Unfavorite', ['class' => 'btn btn-warning btn-xs']) !!}
                 {!! Form::close() !!}
             @else
-                {!! Form::open(['route' => ['user.favorite', $micropost->id], 'method' => 'store']) !!}
-                {!! Form::submit('Favorite', ['class' => 'btn btn-danger btn-xs']) !!}
+                {!! Form::open(['route' => ['user.favorite', $micropost->id], 'method' => 'store']) !!} 
+                <!--ここで命令がなされて、ここのマイクロポストにはidがそれぞれあるから、web.phpの命令の時には、micropost_idを指定する。-->
+                {!! Form::submit('Favorite', ['class' => 'btn btn-primary btn-xs']) !!}  <!--ボタン変えた。-->
                 {!! Form::close() !!}
             @endif
             </div>

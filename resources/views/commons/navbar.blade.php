@@ -18,7 +18,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>{!! link_to_route('users.show', 'My profile', ['id' => Auth::id()]) !!}</li>
-                                
+                                <!-- 指定されたルートへのHTMLリンクを生成します。-->
+                                <!-- link_to_route('route.name', $title, $parameters = array(), $attributes = array()); -->
+                                <!-- users.showってルーティング $titleはMy profileって名前付の所 .....-->
                            
                                 <li role="separator" class="divider"></li>
                                 <li>{!! link_to_route('users.favorites', 'Favorites', ['id' => Auth::id()]) !!}</li>

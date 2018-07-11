@@ -8,17 +8,9 @@ class Micropost extends Model
 {
     protected $fillable = ['content', 'user_id'];
 
-    public function user()
+    public function user() //Micropost を持つ User は1人なので、 単数形 user でメソッドを定義
     {
         return $this->belongsTo(User::class);
     }
-    
-    //2 追加分　多対多の関係のマイクロポスト側
-    public function favored()
-    {
-        return $this->belongsToMany(User::class, 'favorite', 'micropost_id', 'user_id')->withTimestamps();
-    }
-                                     //('App\Micropost'); ？
-                                     
 }
     

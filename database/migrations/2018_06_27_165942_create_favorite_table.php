@@ -25,6 +25,7 @@ class CreateFavoriteTable extends Migration
             
             // user_idとmicropost_idの組み合わせの重複を許さない
             $table->unique(['user_id', 'micropost_id']);
+            //上記の２つの重複は許さないが、その２つのidの組み合わせを管理するidは関係ない。。？
             
         });
     }

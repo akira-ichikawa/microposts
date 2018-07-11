@@ -1,4 +1,8 @@
 <?php
+/**
+create アクションや store アクションが不要なのは、それらは RegisterController が担ってくれたからです。
+ここでは index と show のみを実装します。 User に関する Controller が2つある形になります。
+**/
 
 namespace App\Http\Controllers;
 
@@ -20,9 +24,9 @@ class UsersController extends Controller
     
     public function show($id)
     {
-        $user = User::find($id);
-        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
-
+        $user = User::find($id);  //findで一人を探して実質newして$user→new＝メモリに保存する感じ
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);  //
+// microposts変数の定義
         $data = [
             'user' => $user,
             'microposts' => $microposts,
@@ -66,11 +70,11 @@ class UsersController extends Controller
     public function favorites($id)
     {
         $user = User::find($id);
-        $favorites = $user->favorites()->paginate(10);
+        $favorites = $user->favorites()->paginate(10);  //このfavoritesはuserクラスのfavorites関数
         
-        $data = [
+        $data = [   //配列
             'user' => $user,
-            'microposts' => $favorites,
+            'microposts' => $favorites,  //このfavoritesはどんな形で帰ってくるのか、配列？
         ];
             
         $data += $this->counts($user);
@@ -80,3 +84,8 @@ class UsersController extends Controller
     }
     
 }
+
+/*
+
+
+*/

@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 class UserFavoritesController extends Controller
 {
-    public function store(Request $request, $micropostId)
+    public function store(Request $request, $micropostId)  //ルーターの
     {
-        \Auth::user()->favorite($micropostId);
+        \Auth::user()->favorite($micropostId);  //ログイン中のユーザーを取得、関数起動
+        //このユーザーはUserクラスのことで良い？
         return redirect()->back();
     }
 
@@ -18,5 +19,6 @@ class UserFavoritesController extends Controller
         return redirect()->back();
     }
 }
+
 
 
