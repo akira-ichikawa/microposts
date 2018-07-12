@@ -11,6 +11,7 @@
             </div>
             <div>
                 <p>{!! nl2br(e($micropost->content)) !!}</p>
+                <!--nl2br — 改行文字の前に HTML の改行タグを挿入する-->
             </div>
             
             <div>

@@ -151,10 +151,28 @@ public function unfavorite($micropostId)
 }
 
 public function is_favorite($micropostId) {  //既にファボしているものを返す
-    return $this->favorites()->where('micropost_id', $micropostId)->exists();  //このmicropostidは？
+    return $this->favorites()->where('micropost_id', $micropostId)->exists(); 
+    //このmicropostidは？要は中間テーブルに存在するものと投稿のidが被って存在するなら、、?
 }
 
 }
+
+/*
+一対多では、 microposts テーブルを作成するときに user_id を付与しました。
+microposts テーブルに user_id を設置することで、 Micropost が所属する User を特定できたのです。
+そして、 belongsTo と hasMany のメソッドによって両者をモデルファイルで接続することができようになり、
+$user->microposts や $micropost->user が使用可能になったわけです。
+多対多では、片方のテーブルに xxxx_id のようなカラムを設置するだけでは実現できません。
+実現できなくもないですが、カラムの中身が配列になってしまいます。
+データベースの1つの値が配列になってしまうのは、とても扱いにくく好ましくありません。
+そこで、多対多の場合には、中間テーブルを設置するのが最も有効な方法です。
+中間テーブルとは、 users や microposts のような、メインとなるリソースではなく、その関係を接続するためだけのテーブルを言います。
+例えば、 User が特定の Micropost をお気に入りする場合、 
+users テーブルの id と microposts テーブルの id を接続する favorites テーブルを作成します。
+favorites テーブルには user_id と micropost_id を設置します。この favorites テーブルのレコードに user_id が 1 で、
+micropost_id が 10 のものがあったとすると、 id が 1 の User が id が 10 の Micropost をお気に入りに追加しているということを意味します。
+ここで実装するフォローの関係も同様です。ただし、 User と Micropost ではなく、 User と User なので、
+同じテーブルに対しての中間テーブルになります。と言っても、 考え方は全く同じで、 ただ Micropost が User に代わったに過ぎません。
 
 /*
 フォロー／アンフォローとは、中間テーブルのレコードを保存／削除することです。
